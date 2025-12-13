@@ -30,3 +30,23 @@ async def delete_sweet(id: str):
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Sweet not found")
     return {"message": "Sweet deleted successfully"}
+
+from app.modules.admin.schemas import AdminUserCreate
+from app.core.security import get_password_hash
+
+async def create_admin_user(user: AdminUserCreate):
+    database = db.get_db()
+    existing_user = await database.users.find_one({"username": user.username})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    
+    hashed_password = get_password_hash(user.password)
+    user_dict = {
+        "username": user.username,
+        "email": user.email,
+        "hashed_password": hashed_password,
+        "is_admin": True
+    }
+    result = await database.users.insert_one(user_dict)
+    user_dict["id"] = str(result.inserted_id)
+    return user_dict

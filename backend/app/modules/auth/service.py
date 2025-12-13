@@ -12,7 +12,8 @@ async def create_user(user: UserCreate):
     
     hashed_password = get_password_hash(user.password)
     user_dict = user.dict()
-    user_dict["password"] = hashed_password
+    user_dict["hashed_password"] = hashed_password
+    del user_dict["password"]
     user_dict["is_admin"] = False
     
     result = await database.users.insert_one(user_dict)
@@ -22,7 +23,7 @@ async def create_user(user: UserCreate):
 async def authenticate_user(form_data: OAuth2PasswordRequestForm):
     database = db.get_db()
     user = await database.users.find_one({"username": form_data.username})
-    if not user or not verify_password(form_data.password, user["password"]):
+    if not user or not verify_password(form_data.password, user["hashed_password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",

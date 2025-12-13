@@ -16,3 +16,12 @@ async def edit_sweet(id: str, sweet: SweetUpdate, admin=Depends(get_current_admi
 @router.delete("/{id}")
 async def remove_sweet(id: str, admin=Depends(get_current_admin)):
     return await delete_sweet(id)
+    return await delete_sweet(id)
+
+from app.modules.admin.schemas import AdminUserCreate
+from app.modules.admin.service import create_admin_user
+from app.modules.auth.schemas import UserResponse
+
+@router.post("/users", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+async def add_admin_user(user: AdminUserCreate, admin=Depends(get_current_admin)):
+    return await create_admin_user(user)
