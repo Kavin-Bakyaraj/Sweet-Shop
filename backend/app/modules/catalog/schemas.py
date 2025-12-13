@@ -6,6 +6,7 @@ class SweetBase(BaseModel):
     category: str
     price: float = Field(gt=0)
     quantity: int = Field(ge=0)
+    image_url: Optional[str] = None
 
 class SweetCreate(SweetBase):
     pass
@@ -15,6 +16,7 @@ class SweetUpdate(BaseModel):
     category: Optional[str] = None
     price: Optional[float] = Field(None, gt=0)
     quantity: Optional[int] = Field(None, ge=0)
+    image_url: Optional[str] = None
 
 class SweetResponse(SweetBase):
     id: str
