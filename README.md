@@ -23,17 +23,22 @@ A robust, full-stack **Sweet Shop Management System** built to demonstrate moder
 ## Screenshots
 ### Dashboard (Redesigned)
 Full-width layout with Quick Actions and Featured Sweets grid.
+<img width="1903" height="987" alt="image" src="https://github.com/user-attachments/assets/0eb549a5-cc93-4157-b618-a6c1215492ab" />
 
 ### User Profile
 Order history and account management.
+<img width="1914" height="983" alt="image" src="https://github.com/user-attachments/assets/d2267238-7703-4c25-9806-f54191a924f3" />
 
 ### Admin Dashboard
+<img width="1902" height="990" alt="image" src="https://github.com/user-attachments/assets/c1c11ace-c170-4bfd-a71f-3e7a3fd91322" />
 
 
 ### Admin Sweet Management
+<img width="1919" height="927" alt="image" src="https://github.com/user-attachments/assets/c281f692-7f53-4892-8f67-d5f05aac5e42" />
 
 
 ### Admin Inventory Management
+<img width="1919" height="991" alt="image" src="https://github.com/user-attachments/assets/511a0002-1168-4c8f-a434-be5f8aa19cf0" />
 
 
 
