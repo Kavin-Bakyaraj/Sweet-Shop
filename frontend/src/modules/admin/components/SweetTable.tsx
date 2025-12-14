@@ -17,7 +17,7 @@ interface SweetTableProps {
     onRestock: (sweet: Sweet) => void;
 }
 
-const SweetTable: React.FC<SweetTableProps> = ({ sweets, onEdit, onDelete }) => {
+const SweetTable: React.FC<SweetTableProps> = ({ sweets, onEdit, onDelete, onRestock }) => {
     return (
         <div className="bg-surface shadow-sm border border-primary-100 rounded-xl overflow-hidden">
             <div className="overflow-x-auto">

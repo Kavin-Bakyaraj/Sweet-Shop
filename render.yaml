@@ -24,10 +24,8 @@ services:
       - key: S3_BUCKET_NAME
         sync: false
 
-  # Frontend Service
-  - type: static
-    name: sweet-shop-frontend
-    env: static
+staticSites:
+  - name: sweet-shop-frontend
     buildCommand: npm install && npm run build
     publishDir: dist
     rootDir: frontend

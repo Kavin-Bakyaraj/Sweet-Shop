@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardLayout from '../../core/components/DashboardLayout';
 import SweetTable from './components/SweetTable';
 import SweetForm from './components/SweetForm';
