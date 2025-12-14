@@ -18,6 +18,16 @@ import os
 
 app = FastAPI(title="Sweet Shop API", lifespan=lifespan)
 
+# CORS Configuration
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for Render deployment
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Ensure static directory exists
 os.makedirs("static/images", exist_ok=True)
 

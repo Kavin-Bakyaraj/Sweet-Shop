@@ -67,6 +67,19 @@ npm run dev
 ```
 Application will be live at `http://localhost:5173`.
 
+## Deployment (Render)
+This repository includes a `render.yaml` Blueprint for easy deployment.
+
+1.  Push this repo to GitHub/GitLab.
+2.  Log in to [Render](https://render.com/).
+3.  Click **New +** -> **Blueprint**.
+4.  Connect your repository.
+5.  Render will auto-detect the backend and frontend services.
+6.  **Important**: You must manually provide the following Environment Variables in the Render Dashboard when prompted:
+    *   `MONGODB_URL` (Connection string)
+    *   `JWT_SECRET_KEY` (Random string)
+    *   `AWS_Access_Key` / `Secret` (for S3 images)
+
 ## Test Report
 The backend was built using a strict TDD "Red-Green-Refactor" cycle.
 - **Total Tests**: 20+ passing tests.

@@ -1,0 +1,43 @@
+services:
+  # Backend Service
+  - type: web
+    name: sweet-shop-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: MONGODB_URL
+        sync: false  # User needs to input this in Render dashboard
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-east-1
+      - key: S3_BUCKET_NAME
+        sync: false
+
+  # Frontend Service
+  - type: static
+    name: sweet-shop-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    publishDir: dist
+    rootDir: frontend
+    routes:
+      - type: rewrite
+        source: /**
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: sweet-shop-backend
+          property: url
