@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Edit2, Trash2, PlusCircle } from 'lucide-react';
 
 interface Sweet {
     id: string;
@@ -14,6 +14,7 @@ interface SweetTableProps {
     sweets: Sweet[];
     onEdit: (sweet: Sweet) => void;
     onDelete: (id: string) => void;
+    onRestock: (sweet: Sweet) => void;
 }
 
 const SweetTable: React.FC<SweetTableProps> = ({ sweets, onEdit, onDelete }) => {
@@ -64,7 +65,7 @@ const SweetTable: React.FC<SweetTableProps> = ({ sweets, onEdit, onDelete }) => 
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    ${sweet.price.toFixed(2)}
+                                    ₹{sweet.price.toFixed(2)}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`text-sm font-medium ${sweet.quantity > 10 ? 'text-green-600' : 'text-red-600'}`}>
@@ -72,6 +73,13 @@ const SweetTable: React.FC<SweetTableProps> = ({ sweets, onEdit, onDelete }) => 
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button
+                                        onClick={() => onRestock(sweet)}
+                                        className="text-green-600 hover:text-green-900 mr-4 transition-colors"
+                                        title="Restock"
+                                    >
+                                        <PlusCircle className="h-4 w-4" />
+                                    </button>
                                     <button
                                         onClick={() => onEdit(sweet)}
                                         className="text-primary-600 hover:text-primary-900 mr-4 transition-colors"

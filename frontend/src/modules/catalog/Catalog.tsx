@@ -11,6 +11,7 @@ interface Sweet {
     category: string;
     price: number;
     quantity: number;
+    image_url?: string;
 }
 
 const Catalog = () => {
@@ -41,9 +42,20 @@ const Catalog = () => {
         }
     };
 
-    const handleAddToCart = (id: string) => {
-        console.log('Add to cart:', id);
-        // TODO: Implement cart functionality
+    const handlePurchase = async (id: string) => {
+        try {
+            await api.post('/orders', {
+                items: [
+                    { sweet_id: id, quantity: 1 }
+                ]
+            });
+            // Refresh list to show updated stock
+            fetchSweets();
+            alert('Order placed successfully! Check your profile for details.');
+        } catch (error) {
+            console.error('Purchase failed:', error);
+            alert('Failed to place order. Please try again.');
+        }
     };
 
     const filteredSweets = sweets.filter((sweet) => {
@@ -90,7 +102,7 @@ const Catalog = () => {
                                     <SweetCard
                                         key={sweet.id}
                                         sweet={sweet}
-                                        onAddToCart={handleAddToCart}
+                                        onPurchase={handlePurchase}
                                         isAdmin={isAdmin}
                                     />
                                 ))}

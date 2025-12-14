@@ -11,3 +11,5 @@ pytest
 pytest-asyncio
 httpx
 mongomock
+boto3
+Pillow

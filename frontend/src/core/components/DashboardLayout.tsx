@@ -46,10 +46,10 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                         </div>
                         <div className="hidden sm:ml-6 sm:flex sm:items-center">
                             <div className="flex items-center space-x-4">
-                                <div className="flex items-center text-sm text-gray-600">
+                                <Link to="/profile" className="flex items-center text-sm text-gray-600 hover:text-primary-600 transition-colors" title="View Profile">
                                     <User className="w-4 h-4 mr-2" />
                                     <span className="font-medium">{user?.username}</span>
-                                </div>
+                                </Link>
                                 <button
                                     onClick={handleLogout}
                                     className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
@@ -106,6 +106,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                                 </div>
                             </div>
                             <div className="mt-3 space-y-1">
+                                <Link
+                                    to="/profile"
+                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                                >
+                                    Your Profile
+                                </Link>
                                 <button
                                     onClick={handleLogout}
                                     className="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"

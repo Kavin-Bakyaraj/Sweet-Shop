@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from app.modules.auth.schemas import UserCreate, UserResponse, Token
-from app.modules.auth.service import create_user, authenticate_user
+from app.modules.auth.schemas import UserCreate, UserResponse, Token, UserUpdate
+from app.modules.auth.service import create_user, authenticate_user, update_user_profile
 from app.core.dependencies import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -18,3 +18,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 @router.get("/me", response_model=UserResponse)
 async def read_users_me(current_user: UserResponse = Depends(get_current_user)):
     return current_user
+
+@router.put("/me", response_model=UserResponse)
+async def update_me(user_update: UserUpdate, current_user: UserResponse = Depends(get_current_user)):
+    return await update_user_profile(current_user.username, user_update)

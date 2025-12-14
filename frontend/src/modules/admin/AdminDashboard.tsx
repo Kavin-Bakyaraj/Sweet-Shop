@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../core/components/DashboardLayout';
 import SweetTable from './components/SweetTable';
 import SweetForm from './components/SweetForm';
+import RestockForm from './components/RestockForm';
 import api from '../../core/api/client';
 import { Plus } from 'lucide-react';
 
@@ -17,7 +18,9 @@ interface Sweet {
 const AdminDashboard = () => {
     const [sweets, setSweets] = useState<Sweet[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isRestockModalOpen, setIsRestockModalOpen] = useState(false);
     const [editingSweet, setEditingSweet] = useState<Sweet | null>(null);
+    const [restockSweet, setRestockSweet] = useState<Sweet | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -75,6 +78,26 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleRestockClick = (sweet: Sweet) => {
+        setRestockSweet(sweet);
+        setIsRestockModalOpen(true);
+    };
+
+    const handleRestockSubmit = async (quantity: number) => {
+        if (!restockSweet) return;
+        setIsLoading(true);
+        try {
+            await api.post(`/inventory/sweets/${restockSweet.id}/restock`, { quantity });
+            setIsRestockModalOpen(false);
+            fetchSweets();
+        } catch (err) {
+            console.error('Failed to restock sweet:', err);
+            alert('Failed to restock sweet');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <DashboardLayout>
             <div className="px-4 sm:px-0">
@@ -102,6 +125,7 @@ const AdminDashboard = () => {
                     sweets={sweets}
                     onEdit={handleEditClick}
                     onDelete={handleDeleteClick}
+                    onRestock={handleRestockClick}
                 />
 
                 {isModalOpen && (
@@ -109,6 +133,15 @@ const AdminDashboard = () => {
                         initialData={editingSweet}
                         onSubmit={handleFormSubmit}
                         onCancel={() => setIsModalOpen(false)}
+                        isLoading={isLoading}
+                    />
+                )}
+
+                {isRestockModalOpen && restockSweet && (
+                    <RestockForm
+                        sweetName={restockSweet.name}
+                        onSubmit={handleRestockSubmit}
+                        onCancel={() => setIsRestockModalOpen(false)}
                         isLoading={isLoading}
                     />
                 )}

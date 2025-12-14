@@ -8,18 +8,18 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#E11D48', // Rose 600
+          DEFAULT: '#EA580C', // Orange 600
           foreground: '#FFFFFF',
-          50: '#FFF1F2',
-          100: '#FFE4E6',
-          200: '#FECDD3',
-          300: '#FDA4AF',
-          400: '#FB7185',
-          500: '#F43F5E',
-          600: '#E11D48',
-          700: '#BE123C',
-          800: '#9F1239',
-          900: '#881337',
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#F97316',
+          600: '#EA580C',
+          700: '#C2410C',
+          800: '#9A3412',
+          900: '#7C2D12',
         },
         secondary: {
           DEFAULT: '#F59E0B', // Amber 500
@@ -35,7 +35,7 @@ export default {
           800: '#92400E',
           900: '#78350F',
         },
-        background: '#FDF2F8', // Rose 50 (Very light pinkish white)
+        background: '#FFF7ED', // Orange 50
         surface: '#FFFFFF',
       },
       fontFamily: {

@@ -5,6 +5,7 @@ from app.modules.auth.router import router as auth_router
 from app.modules.admin.router import router as admin_router
 from app.modules.catalog.router import router as catalog_router
 from app.modules.inventory.router import router as inventory_router
+from app.modules.orders.router import router as orders_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -26,6 +27,11 @@ app.include_router(auth_router, prefix="/api")
 app.include_router(admin_router, prefix="/api")
 app.include_router(catalog_router, prefix="/api")
 app.include_router(inventory_router, prefix="/api")
+app.include_router(orders_router, prefix="/api")
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
 @app.get("/")
 async def root():

@@ -7,20 +7,24 @@ interface Sweet {
     category: string;
     price: number;
     quantity: number;
-    image?: string; // Optional image URL if we had one, using placeholder for now
+    image_url?: string;
 }
 
 interface SweetCardProps {
     sweet: Sweet;
-    onAddToCart?: (id: string) => void;
+    onPurchase?: (id: string) => void;
     isAdmin?: boolean;
 }
 
-const SweetCard: React.FC<SweetCardProps> = ({ sweet, onAddToCart, isAdmin = false }) => {
+const SweetCard: React.FC<SweetCardProps> = ({ sweet, onPurchase, isAdmin = false }) => {
     return (
         <div className="bg-surface rounded-xl shadow-sm border border-primary-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
             <div className="h-48 bg-primary-50 flex items-center justify-center relative overflow-hidden group">
-                <span className="text-4xl" role="img" aria-label="sweet">🍬</span>
+                {sweet.image_url ? (
+                    <img src={sweet.image_url} alt={sweet.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                ) : (
+                    <span className="text-4xl" role="img" aria-label="sweet">🍬</span>
+                )}
                 {/* Overlay for hover effect */}
                 <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
@@ -36,7 +40,7 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet, onAddToCart, isAdmin = fal
                         </h3>
                     </div>
                     <p className="text-lg font-bold text-primary-600">
-                        ${sweet.price.toFixed(2)}
+                        ₹{sweet.price.toFixed(2)}
                     </p>
                 </div>
 
@@ -49,11 +53,12 @@ const SweetCard: React.FC<SweetCardProps> = ({ sweet, onAddToCart, isAdmin = fal
 
                     {!isAdmin && sweet.quantity > 0 && (
                         <button
-                            onClick={() => onAddToCart?.(sweet.id)}
-                            className="inline-flex items-center p-2 border border-transparent rounded-full shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
-                            title="Add to cart"
+                            onClick={() => onPurchase?.(sweet.id)}
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                            title="Buy 1"
                         >
-                            <ShoppingCart className="h-4 w-4" />
+                            <ShoppingCart className="h-4 w-4 mr-1.5" />
+                            Buy
                         </button>
                     )}
                 </div>

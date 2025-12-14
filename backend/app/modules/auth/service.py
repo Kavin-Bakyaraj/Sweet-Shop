@@ -1,6 +1,6 @@
 from app.core.database import db
 from app.core.security import get_password_hash, verify_password, create_access_token
-from app.modules.auth.schemas import UserCreate, Token
+from app.modules.auth.schemas import UserCreate, Token, UserUpdate
 from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -32,3 +32,23 @@ async def authenticate_user(form_data: OAuth2PasswordRequestForm):
     
     access_token = create_access_token(data={"sub": user["username"]})
     return {"access_token": access_token, "token_type": "bearer"}
+
+async def update_user_profile(current_username: str, user_update: UserUpdate):
+    database = db.get_db()
+    update_data = {k: v for k, v in user_update.dict().items() if v is not None}
+    
+    if "password" in update_data:
+        update_data["hashed_password"] = get_password_hash(update_data["password"])
+        del update_data["password"]
+        
+    if not update_data:
+        return await database.users.find_one({"username": current_username})
+
+    await database.users.update_one({"username": current_username}, {"$set": update_data})
+    
+    # Return updated user
+    # If username was changed, we need to query by new username, else old one
+    new_username = update_data.get("username", current_username)
+    updated_user = await database.users.find_one({"username": new_username})
+    updated_user["id"] = str(updated_user["_id"])
+    return updated_user

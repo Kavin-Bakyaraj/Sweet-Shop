@@ -23,3 +23,43 @@ async def client():
     # Cleanup and close
     await db.get_db().client.drop_database(settings.DATABASE_NAME)
     db.close()
+
+@pytest.fixture(scope="function")
+async def token(client: AsyncClient):
+    # Register
+    user_data = {
+        "username": "authtest",
+        "email": "auth@test.com",
+        "password": "password123"
+    }
+    await client.post("/api/auth/register", json=user_data)
+    
+    # Login
+    response = await client.post("/api/auth/login", data={
+        "username": "authtest",
+        "password": "password123"
+    })
+    return response.json()["access_token"]
+
+@pytest.fixture(scope="function")
+async def admin_token(client: AsyncClient):
+    # Create admin user directly in DB
+    from app.core.security import get_password_hash
+    
+    admin_data = {
+        "username": "admintest",
+        "email": "admin@test.com",
+        "hashed_password": get_password_hash("admin123"),
+        "is_admin": True
+    }
+    
+    # We need to access the DB directly. 
+    # Since client fixture connects db, we can use db.get_db()
+    await db.get_db().users.insert_one(admin_data)
+    
+    # Login
+    response = await client.post("/api/auth/login", data={
+        "username": "admintest",
+        "password": "admin123"
+    })
+    return response.json()["access_token"]

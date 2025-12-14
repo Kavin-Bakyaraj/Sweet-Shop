@@ -5,6 +5,7 @@ import Register from './modules/auth/Register';
 import Dashboard from './modules/dashboard/Dashboard';
 import Catalog from './modules/catalog/Catalog';
 import AdminDashboard from './modules/admin/AdminDashboard';
+import Profile from './modules/profile/Profile';
 import ProtectedRoute from './core/components/ProtectedRoute';
 
 function App() {
@@ -35,6 +36,14 @@ function App() {
             element={
               <ProtectedRoute requireAdmin>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

@@ -1,23 +1,89 @@
 # Sweet Shop Management System
 
 ## Overview
-A full-stack Sweet Shop Management System built with FastAPI (Backend) and React (Frontend).
+A robust, full-stack **Sweet Shop Management System** built to demonstrate modern development practices, including **Test-Driven Development (TDD)**, modular architecture, and secure API design.
 
-## Backend Setup
-1. Navigate to `backend/`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run server: `uvicorn app.main:app --reload`
+### Tech Stack
+- **Backend**: Python (FastAPI), MongoDB (Motor), Pydantic for validation.
+- **Frontend**: React (Vite), Tailwind CSS, Lucide Icons.
+- **Testing**: `pytest` (Backend), manual verification (Frontend).
+- **Authentication**: JWT (JSON Web Tokens).
 
-## AI Usage
-### My AI Usage
-I used **Google Gemini** (via Antigravity) to assist with the development of this project.
+## Features
+- **User Authentication**: Secure Register & Login with JWT.
+- **Role-Based Access**: separate tailored experiences for Users and Admins.
+- **Sweet Catalog**: Searchable, filterable list of sweets with stock tracking.
+- **Order Management**: Users can place orders (atomic stock reduction) and view history.
+- **Admin Panel**: Full CRUD for sweets, image uploads (S3), and inventory management.
 
-**How I used it:**
-- **Project Structure & Planning**: I used Gemini to brainstorm the modular "MNC-style" architecture and create the implementation plan.
-- **Boilerplate Generation**: I used Gemini to generate the initial FastAPI setup, including database connection logic and Pydantic models.
-- **Test-Driven Development**: I asked Gemini to write failing tests for each module (Auth, Catalog, Inventory) before implementing the logic, ensuring a strict TDD workflow.
-- **Debugging**: I used Gemini to troubleshoot dependency issues (e.g., `motor` vs `pymongo` version conflict, `bcrypt` incompatibility with `passlib`).
-- **Refactoring**: I used Gemini to refactor the project structure based on feedback to separate concerns into distinct modules.
+## Credentials
+- **Admin**: admin/Admin@lalsweets9363
+- **User**: users can register and login with their credentials
 
-**Reflection:**
-AI significantly accelerated the development process, especially in setting up the boilerplate and writing comprehensive tests. It helped identify and resolve obscure dependency issues quickly. However, manual oversight was crucial to ensure the architecture met specific requirements (like the modular structure) and to verify that the generated code was correct and secure.
+## Screenshots
+### Dashboard (Redesigned)
+Full-width layout with Quick Actions and Featured Sweets grid.
+
+### User Profile
+Order history and account management.
+
+### Admin Dashboard
+
+
+### Admin Sweet Management
+
+
+### Admin Inventory Management
+
+
+
+
+## Local Setup Instructions
+
+### Prerequisites
+- Python 3.9+
+- Node.js 16+
+- MongoDB running locally or defined in `.env`.
+
+### 1. Backend Setup
+```bash
+cd backend
+python -m venv venv
+# Windows
+.\venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
+
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+API will be live at `http://localhost:8000`. Documentation at `/docs`.
+
+### 2. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Application will be live at `http://localhost:5173`.
+
+## Test Report
+The backend was built using a strict TDD "Red-Green-Refactor" cycle.
+- **Total Tests**: 20+ passing tests.
+- **Coverage**: Auth, Catalog, Admin, Inventory, Orders.
+- **Latest Run**: All tests passed (including new security validation rules).
+
+## My AI Usage
+I used **Google Gemini** (via Antigravity) extensively as a co-pilot to accelerate development while clearly directing the architectural decisions myself.
+
+### Tools Used
+- **Google Gemini**: For code generation, debugging, and TDD workflow.
+
+### How I Used It
+1.  **TDD Workflow**: I asked Gemini to write *failing tests* for my `orders` and `auth` modules before writing a single line of implementation code. This enforced strict TDD.
+2.  **Boilerplate & Architecture**: I used it to generate the initial file structure and Pydantic schemas, saving hours of manual setup.
+3.  **Debugging & Refactoring**: When I encountered dependency conflicts (e.g., `pytest-asyncio` versions), Gemini helped suggest compatible versions.
+4.  **UI Design**: I leveraged its ability to generate Tailwind CSS classes to create the modern, responsive Dashboard layout.
+
+### Reflection
+AI acted as a "force multiplier," allowing me to focus on high-level logic and security architecture (like enforcing input validation) while it handled the implementation details. It didn't replace my judgment; for instance, I manually corrected its layout suggestions and enforced specific project structure rules.
